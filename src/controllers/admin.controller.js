@@ -1,7 +1,14 @@
-const Category = require('../models/category.model');
-const Course = require('../models/courses.model');
+const httpStatus = require('http-status');
+const pick = require('../utils/pick');
+const ApiError = require('../utils/ApiError');
+const catchAsync = require('../utils/catchAsync');
+const Admin = require('../models');
+const Content = require('../models');
+const Course = require('../models');
+const { authService, userService, tokenService, emailService } = require('../services');
+
 exports.get_newCourse_page = (req, res) => {
-    Category.find((err, categories) => {
+    Content.find((err, categories) => {
         if (err) {
             return res.render('newCourse', {
                 isLogged: req.session.isLogged,
@@ -23,7 +30,7 @@ exports.create_newCourse = (req, res) => {
     newCourse = new Course({
         title: req.body.title,
         description: req.body.description,
-        category: req.body.categoryID,
+        Content: req.body.ContentID,
         instructor: req.body.instructor,
         aboutInstructor: req.body.aboutInstructor,
         price: req.body.price,
@@ -37,23 +44,21 @@ exports.create_newCourse = (req, res) => {
 }
 
 
-exports.get_addCategory_page = (req, res) => {
-    return res.render('addNewCategory', {
+exports.get_addContent_page = (req, res) => {
+    return res.render('addNewContent', {
         isLogged: req.session.isLogged,
         adminLogged: req.session.adminLogged,
-        message: "Enter the name of new category."
+        message: "Enter the name of new Content."
     });
 }
-exports.create_newCategory = (req, res) => {
-    newCategory = new Category({
-        name: req.body.category
+exports.create_newContent = (req, res) => {
+    newContent = new Content({
+        name: req.body.Content
     })
-    newCategory.save((err, category) => {
+    newContent.save((err, Content) => {
         if (err) {
-            return res.render('addNewCategory', {
-                isLogged: req.session.isLogged,
-                adminLogged: req.session.adminLogged,
-                message: "Some error occurred while creating the category. Make sure this category doesn't already exists."
+            return res.send({
+                message: "Some error occurred while creating the Content. Make sure this Content doesn't already exists."
             });
         } else {
             res.redirect('/admin/newCourse')
@@ -98,26 +103,36 @@ exports.create_uploadVideo = (req, res) => {
     })
 }
 
-
-exports.get_adminLogin_page = (req, res) => {
-    res.render('adminLogin', {
-        isLogged: req.session.isLogged,
-        adminLogged: req.session.adminLogged,
-        message: "Enter details to login."
-    });
+exports.admin_register = async(req, res) => {
+    const user = await userService.createUser(req.body);
+    const tokens = await tokenService.generateAuthTokens(user);
+    res.status(httpStatus.CREATED).send({ user, tokens });
+    // if (req.body.email == process.env.ADMIN_USER && req.body.password == process.env.ADMIN_PASS) {
+    //     req.session.adminLogged = true
+    //     res.redirect('/admin/newCourse');
+    // } else {
+    //     return res.render('adminLogin', {
+    //         isLogged: req.session.isLogged,
+    //         adminLogged: req.session.adminLogged,
+    //         message: "User Name or password entered is incorrect."
+    //     })
+    // }
 }
 
-exports.admin_login = (req, res) => {
-    if (req.body.username == process.env.ADMIN_USER && req.body.password == process.env.ADMIN_PASS) {
-        req.session.adminLogged = true
-        res.redirect('/admin/newCourse');
-    } else {
-        return res.render('adminLogin', {
-            isLogged: req.session.isLogged,
-            adminLogged: req.session.adminLogged,
-            message: "User Name or password entered is incorrect."
-        })
-    }
+exports.admin_login = async(req, res) => {
+    const { email, password } = req.body;
+    const user = await authService.loginUserWithEmailAndPassword(email, password);
+    const tokens = await tokenService.generateAuthTokens(user);
+    res.send({ user, tokens });
+    // if (req.body.email == process.env.ADMIN_USER && req.body.password == process.env.ADMIN_PASS) {
+    //     res.redirect('/admin/');
+    // } else {
+    //     return res.render('adminLogin', {
+    //         isLogged: req.session.isLogged,
+    //         adminLogged: req.session.adminLogged,
+    //         message: "User Name or password entered is incorrect."
+    //     })
+    // }
 }
 
 exports.admin_logout = (req, res) => {

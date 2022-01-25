@@ -1,7 +1,6 @@
 const allRoles = {
     user: [],
-    student: [],
-    teacher: [],
+    admin: [],
     admin: ['getUsers', 'manageUsers'],
 };
 

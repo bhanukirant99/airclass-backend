@@ -5,9 +5,9 @@ var MasterSchema = new mongoose.Schema({
     description: String,
     timestamp: { type: Date, default: Date.now },
     likes: { type: Number, default: 0 },
-    category: {
+    Content: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category'
+        ref: 'Content'
     },
     instructor: String,
     aboutInstructor: String,

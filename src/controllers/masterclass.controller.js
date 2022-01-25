@@ -1,5 +1,5 @@
 const { Master } = require('../models');
-const { Category } = require('../models');
+const { Content } = require('../models');
 const Comment = require('../models')
 const mongoose = require('mongoose');
 // const User = require('../models/user');
@@ -15,13 +15,13 @@ const mongoose = require('mongoose');
 // });
 
 exports.get_all_courses = async(req, res) => {
-    var categories = await Category.find();
+    var categories = await Content.find();
     Master.find((err, courses) => {
         let message;
         if (courses.length >= 0) {
             message = "Courses offered"
         } else {
-            message = "Sorry! There are no courses in this category."
+            message = "Sorry! There are no courses in this Content."
         }
         res.send({
             message: message,
@@ -31,20 +31,20 @@ exports.get_all_courses = async(req, res) => {
     }).select('-description -aboutInstructor')
 }
 
-exports.get_courses_of_category = async(req, res) => {
-    if (req.body.category != undefined) {
-        query = { category: mongoose.Types.ObjectId(req.body.category) }
+exports.get_courses_of_Content = async(req, res) => {
+    if (req.body.Content != undefined) {
+        query = { Content: mongoose.Types.ObjectId(req.body.Content) }
     } else {
         query = {};
     }
-    console.log(req.body.category)
-    var categories = await Category.find();
+    console.log(req.body.Content)
+    var categories = await Content.find();
     Master.find(query, (err, courses) => {
         let message;
         if (courses.length >= 0) {
             message = "Courses offered"
         } else {
-            message = "Sorry! There are no courses in this category."
+            message = "Sorry! There are no courses in this Content."
         }
         res.render('courses', {
             isLogged: req.session.isLogged,

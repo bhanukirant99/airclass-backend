@@ -3,6 +3,14 @@ const catchAsync = require('../utils/catchAsync');
 const { authService, userService, tokenService, emailService } = require('../services');
 
 const register = catchAsync(async(req, res) => {
+    const initialName = req.body.name.toUpperCase();
+    // const nameArray = initialName.split(" ");
+    req.body.initialName = initialName.slice(0, 2);
+    // if (nameArray[1]) {
+    //     req.body.initialName = +nameArray[1].slice(1);
+    // } else {
+    //     req.body.initialName = +nameArray[0].slice(1, 2);
+    // }
     const user = await userService.createUser(req.body);
     const tokens = await tokenService.generateAuthTokens(user);
     res.status(httpStatus.CREATED).send({ user, tokens });

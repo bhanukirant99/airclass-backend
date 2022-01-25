@@ -1,8 +1,10 @@
 const { Course } = require('../models');
-const { Category } = require('../models');
+const { Content } = require('../models');
 const Comment = require('../models')
 const mongoose = require('mongoose');
 const User = require('../models');
+const httpStatus = require('http-status');
+
 // const Razorpay = require('razorpay');
 // const Transaction = require('../models/transactions');
 // const path = require('path');
@@ -15,36 +17,36 @@ const User = require('../models');
 // });
 
 exports.get_all_courses = async(req, res) => {
-    var categories = await Category.find();
+    // var categories = await Content.find();
     Course.find((err, courses) => {
         let message;
         if (courses.length >= 0) {
             message = "Courses offered"
         } else {
-            message = "Sorry! There are no courses in this category."
+            message = "Sorry! There are no courses in this Content."
         }
         res.send({
             message: message,
             courses: courses,
-            categories: categories
+            // categories: categories
         });
     }).select('-description -aboutInstructor')
 }
 
-exports.get_courses_of_category = async(req, res) => {
-    if (req.body.category != undefined) {
-        query = { category: mongoose.Types.ObjectId(req.body.category) }
+exports.get_courses_of_Content = async(req, res) => {
+    if (req.body.Content != undefined) {
+        query = { Content: mongoose.Types.ObjectId(req.body.Content) }
     } else {
         query = {};
     }
-    console.log(req.body.category)
-    var categories = await Category.find();
+    console.log(req.body.Content)
+    var categories = await Content.find();
     Course.find(query, (err, courses) => {
         let message;
         if (courses.length >= 0) {
             message = "Courses offered"
         } else {
-            message = "Sorry! There are no courses in this category."
+            message = "Sorry! There are no courses in this Content."
         }
         res.render('courses', {
             isLogged: req.session.isLogged,
@@ -59,26 +61,37 @@ exports.get_courses_of_category = async(req, res) => {
 
 exports.get_single_course = async(req, res) => {
     const courseID = mongoose.Types.ObjectId(req.params.courseID.toString());
-    var mostLikedCourses = await Course.find()
-        .limit(4)
-        .select('-description')
-        .sort({ likes: 'desc' });
 
-    // var comments = await Comment.find({ courseID: courseID })
-    //     .populate('userID')
-    //     .sort({ timestamp: 'desc' });
+    // var mostLikedCourses = await Course.find()
+    //     .limit(4)
+    //     .select('-description')
+    //     .sort({ likes: 'desc' });
 
-    var user;
-    if (req.user_id != null && req.token != null) {
-        user = await User.findById(req.body.user_id);
-        var purchasedCourse = user.purchasedCourse;
-        var alreadyPurchased = false;
-        for (let i = 0; i < purchasedCourse.length; i++) {
-            if (purchasedCourse[i].toString() == req.params.courseID.toString()) {
-                alreadyPurchased = true;
-            }
-        }
-    }
+    // var user;
+    // if (req.user_id != null) {
+    //     user = User.findById(req.body.user_id);
+    //     var purchasedCourse = user.purchasedCourse;
+    //     var alreadyPurchased = false;
+    //     for (let i = 0; i < purchasedCourse.length; i++) {
+    //         if (purchasedCourse[i].toString() == req.params.courseID.toString()) {
+    //             alreadyPurchased = true;
+    //         }
+    //     }
+    // }
+
+    // user.purchasedCourse.push(courseID.toString())
+    // user.save((err, user) => {
+    //     if (err) {
+    //         console.log(err);
+    //     }
+
+    //     //increasing the number of enrolled people in courses
+    //     Course.findById(courseID, (err, course) => {
+    //         course.enrolledUsers = course.enrolledUsers + 1;
+    //         course.save();
+    //     }).select('-description -aboutInstructor')
+
+    // })
 
 
     Course.findById(courseID, (err, course) => {
@@ -87,9 +100,8 @@ exports.get_single_course = async(req, res) => {
         } else {
             return res.send({
                 course: course,
-                mostLikedCourses: mostLikedCourses,
+                // mostLikedCourses: mostLikedCourses,
                 // comments: comments,
-                alreadyPurchased: alreadyPurchased
             });
         }
     })
@@ -97,47 +109,68 @@ exports.get_single_course = async(req, res) => {
 }
 
 exports.enroll_course = async(req, res) => {
-    const user = await User.findById(req.body.user_id);
-    const courseID = req.params.courseID;
+    const userID = req.body.user_id;
+    if (userID != null) {
+        const user = await User.findById(userID);
+        const courseID = req.params.courseID;
 
-    //Add courseID in purchased courses of user
-    user.purchasedCourse.push(courseID.toString())
-    user.save((err, user) => {
-        if (err) {
-            console.log(err);
-            //initiate refund
-        }
+        //Add courseID in purchased courses of user
+        user.purchasedCourse.push(courseID.toString())
+        console.log("in progree")
+        user.save((err, user) => {
+            if (err) {
+                console.log(err);
+            }
 
-        //increasing the number of enrolled people in courses
-        Course.findById(courseID, (err, course) => {
-            course.enrolledUsers = course.enrolledUsers + 1;
-            course.save();
-        }).select('-description -aboutInstructor')
+            //increasing the number of enrolled people in courses
+            Course.findById(courseID, (err, course) => {
+                course.enrolledUsers = course.enrolledUsers + 1;
+                course.save();
+            }).select('-description -aboutInstructor')
+            res.status(200).send('success');
 
-    })
+        })
+    } else {
+        res.send(400).send("Please Provide a User ID")
+    }
 
-    res.redirect('/');
 }
 
-exports.get_home_page = async(req, res) => {
-    var recentCourses = await Course.find()
-        .limit(4)
-        .select('-description -aboutInstructor')
-        .sort({ timestamp: 'desc' });
-    var mostLikedCourses = await Course.find()
-        .limit(4)
-        .select('-description -aboutInstructor')
-        .sort({ likes: 'desc' });
-    var categories = await Category.find();
-
-    res.render('index', {
-        isLogged: req.session.isLogged,
-        adminLogged: req.session.adminLogged,
-        recentCourses: recentCourses,
-        mostLikedCourses: mostLikedCourses,
-        categories: categories
+exports.create_newCourse = (req, res) => {
+    newCourse = new Course({
+        title: req.body.title,
+        info: req.body.info,
+        description: req.body.description,
+        instructor: req.body.instructor,
+        aboutInstructor: req.body.aboutInstructor,
+        price: req.body.price,
+        watchHours: req.body.watchHours,
+    })
+    newCourse.save((err, course) => {
+        if (err) console.log(err)
+        res.status(httpStatus.CREATED).send(newCourse);
     })
 }
+
+// exports.get_home_page = async(req, res) => {
+//     var recentCourses = await Course.find()
+//         .limit(4)
+//         .select('-description -aboutInstructor')
+//         .sort({ timestamp: 'desc' });
+//     var mostLikedCourses = await Course.find()
+//         .limit(4)
+//         .select('-description -aboutInstructor')
+//         .sort({ likes: 'desc' });
+//     var categories = await Content.find();
+
+//     res.render('index', {
+//         isLogged: req.session.isLogged,
+//         adminLogged: req.session.adminLogged,
+//         recentCourses: recentCourses,
+//         mostLikedCourses: mostLikedCourses,
+//         categories: categories
+//     })
+// }
 
 exports.get_myCourses_page = (req, res) => {
     User.findById(req.session.user_id, (err, user) => {
