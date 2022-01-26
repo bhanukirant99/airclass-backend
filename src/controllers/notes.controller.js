@@ -4,12 +4,25 @@ const mongoose = require('mongoose');
 const { Note } = require('../models');
 const httpStatus = require('http-status');
 
+exports.get_all_notes = async(req, res) => {
+    Note.find((err, notes) => {
+        let message;
+        if (notes.length >= 0) {
+            message = "Notes offered"
+        } else {
+            message = "Sorry! There are no notes in this Contents."
+        }
+        res.send({
+            message: message,
+            notes: notes,
+        });
+    })
+}
+
 exports.get_all_content_notes = async(req, res) => {
-    const contentID = req.body.contentID;
+    const contentID = req.params.contentID;
 
     var notes = await Note.find({ contentID })
-        .populate('userID')
-        .sort({ timestamp: 'desc' });
 
     res.send(notes)
 }
@@ -19,9 +32,8 @@ exports.create_newNote = (req, res) => {
     const newNote = new Note({
         note: req.body.note,
         contentID: contentID,
-        // userID: req.body.user_id
     })
-    newNote.save((err, like) => {
+    newNote.save((err, note) => {
         if (err) console.log(err)
         res.status(httpStatus.CREATED).send(newNote);
     })

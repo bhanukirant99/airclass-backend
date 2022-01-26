@@ -30,5 +30,3 @@ const ContentSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Content', ContentSchema);
-
-//  = Content;

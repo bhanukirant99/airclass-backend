@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', contentController.get_all_contents);
 router.get('/:courseID', contentController.get_all_course_contents);
 // router.get('/courseSingle/:courseID', contentController.get_single_course);
-router.post('/create_newContent', contentController.create_newContent);
+router.post('/create_newContent/:courseID', contentController.create_newContent);
 // router.post('/enrollCourse/:courseID', contentController.enroll_course);
 
 module.exports = router;

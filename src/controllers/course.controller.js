@@ -39,7 +39,7 @@ exports.get_courses_of_Content = async(req, res) => {
         query = { Content: mongoose.Types.ObjectId(req.body.Content) }
     }
     console.log(req.body.Content)
-    var categories = await Content.find();
+    const categories = await Content.find();
     try {
         const courses = await Course.find(query).select('-description -aboutInstructor')
         let message;

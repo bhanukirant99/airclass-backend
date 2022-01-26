@@ -20,17 +20,6 @@ exports.get_all_contents = async(req, res) => {
 }
 
 exports.get_all_course_contents = async(req, res) => {
-    // const _id = req.params.id
-    // try {
-    //     // const task = await Task.findById(_id)
-    //     const task = await Task.findOne({ _id, user: req.user._id })
-    //     if (!task) {
-    //         res.status(404).send()
-    //     }
-    //     res.send(task)
-    // } catch (e) {
-    //     res.status(500).send(e)
-    // }
 
     const courseID = req.params.courseID;
     console.log(courseID)
@@ -42,14 +31,18 @@ exports.get_all_course_contents = async(req, res) => {
     res.send(contents)
 }
 
-exports.create_newContent = (req, res) => {
-    newContent = new Content({
-        title: req.body.title,
-        courseID: req.body.courseID,
-        videoUrl: req.body.videoUrl,
-        watchHours: req.body.watchHours,
-    })
-    console.log(newContent)
+exports.create_newContent = async(req, res) => {
+    const courseID = req.params.courseID
+    newContent = await new Content({
+            title: req.body.title,
+            courseID: courseID,
+            videoUrl: req.body.videoUrl,
+            watchHours: req.body.watchHours,
+        })
+        // const course = await Course.find({ courseID });
+        // console.log(course)
+        // course.courseContents.push(newContent._id);
+        // course.save();
     newContent.save((err, content) => {
         if (err) console.log(err)
         res.status(httpStatus.CREATED).send(newContent);
