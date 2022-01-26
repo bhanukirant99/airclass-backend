@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 var CourseSchema = new mongoose.Schema({
     courseTitle: String,
     courseInfo: String,
-    description: {
+    courseDescription: {
         type: String,
         default: "Competitive Programming helps you become a great Programmer and crack coding interviews and competitons. In this program you will learn Competitive Programming helps you become a great Programmer and crack coding interviews and competitons. In this program you will learn"
     },

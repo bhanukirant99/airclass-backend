@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const ContentSchema = new mongoose.Schema({
-    classTitle: {
+    title: {
         type: String,
         default: "Introduction to Competitive Programming"
     },
@@ -10,20 +10,20 @@ const ContentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
     },
-    classLiked: { type: Number, default: 0 },
-    classNotes: {
+    likes: { type: Number, default: 0 },
+    notes: {
         type: Array,
         default: []
     },
-    classComments: {
+    comments: {
         type: Array,
         default: []
     },
-    classVideo: {
+    videoUrl: {
         type: String,
         default: "https://www.youtube.com/embed/pV6i3PucDMA"
     },
-    classDuration: {
+    watchHours: {
         type: String,
         default: "20 min"
     },

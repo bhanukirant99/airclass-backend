@@ -141,10 +141,8 @@ exports.create_newCourse = (req, res) => {
     const newCourse = new Course({
         courseTitle: req.body.courseTitle,
         courseInfo: req.body.courseInfo,
-        description: req.body.description,
+        courseDescription: req.body.courseDescription,
         courseImage: req.body.courseImage,
-        // aboutInstructor: req.body.aboutInstructor,
-        // price: req.body.price,
         // watchHours: req.body.watchHours,
     })
     newCourse.save((err, course) => {
