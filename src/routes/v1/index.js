@@ -4,6 +4,7 @@ const userRoute = require('./user.route');
 const coursesRoute = require('./courses.route')
 const contentsRoute = require('./contents.route')
 const commentsRoute = require('./comments.route')
+const discussionRoute = require('./discussions.route')
 const notessRoute = require('./notes.route')
 const adminRoute = require('./admin.route')
 const docsRoute = require('./docs.route');
@@ -38,6 +39,10 @@ const defaultRoutes = [{
     {
         path: '/notes',
         route: notessRoute,
+    },
+    {
+        path: '/discussions',
+        route: discussionRoute,
     },
 ];
 

@@ -1,5 +1,5 @@
 const { content } = require('../models');
-const { discussion } = require('../models')
+const { Discussion } = require('../models')
 const mongoose = require('mongoose');
 const { User } = require('../models');
 const httpStatus = require('http-status');
@@ -14,31 +14,31 @@ exports.get_all_discussions = async(req, res) => {
         }
         res.send({
             message: message,
-            contents: contents,
+            discussions: discussions,
         });
     })
 }
 
-exports.get_all_content_discussions = async(req, res) => {
-    const discussionID = req.body.discussionID;
+// exports.get_all_content_discussions = async(req, res) => {
+//     const discussionID = req.body.discussionID;
 
-    var discussions = await discussion.find({ courseID })
-        .populate('userID')
-        .sort({ timestamp: 'desc' });
+//     var discussions = await Discussion.find({ courseID })
+//         .populate('userID')
+//         .sort({ timestamp: 'desc' });
 
-    res.send(discussions)
-}
+//     res.send(discussions)
+// }
 
-exports.create_newdiscussion = (req, res) => {
-    const contentID = req.params.contentID
-    const newdiscussion = new discussion({
-        discussion: req.body.discussion,
-        contentID: contentID,
-        userID: req.body.userID
+exports.create_newDiscussion = (req, res) => {
+    const userID = req.params.userID;
+    const newDiscussion = new Discussion({
+        discussionTitle: req.body.discussionTitle,
+        discussionInfo: req.body.discussionInfo,
+        userID: userID
     })
-    newdiscussion.save((err, discussion) => {
+    newDiscussion.save((err, discussion) => {
         if (err) console.log(err)
-        res.status(httpStatus.CREATED).send(newdiscussion);
+        res.status(httpStatus.CREATED).send(newDiscussion);
     })
 }
 
