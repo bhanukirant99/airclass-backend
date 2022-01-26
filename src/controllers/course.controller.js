@@ -117,7 +117,7 @@ exports.enroll_course = async(req, res) => {
 
         //Add courseID in purchased courses of user
         user.purchasedCourse.push(courseID.toString())
-        console.log("in progree")
+        console.log("in progress")
         user.save((err, user) => {
             if (err) {
                 console.log(err);
@@ -128,7 +128,7 @@ exports.enroll_course = async(req, res) => {
                 course.enrolledUsers = course.enrolledUsers + 1;
                 course.save();
             }).select('-description -aboutInstructor')
-            res.status(200).send('success');
+            res.status(200).send(user);
 
         })
     } else {
