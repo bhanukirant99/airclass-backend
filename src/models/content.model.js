@@ -1,16 +1,15 @@
 const mongoose = require('mongoose')
 
 const ContentSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        unique: true
-    },
     title: {
         type: String,
         default: "Introduction to Competitive Programming"
     },
     timestamp: { type: Date, default: Date.now },
+    courseID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course'
+    },
     likes: { type: Number, default: 0 },
     notes: {
         type: Array,
@@ -20,12 +19,16 @@ const ContentSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
-    videoUrl: String,
+    videoUrl: {
+        type: String,
+        default: "https://www.youtube.com/embed/pV6i3PucDMA"
+    },
     watchHours: {
         type: String,
         default: "20 min"
     },
 });
 
-const Content = mongoose.model('Content', ContentSchema);
-module.exports = Content;
+module.exports = mongoose.model('Content', ContentSchema);
+
+//  = Content;

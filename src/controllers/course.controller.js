@@ -1,8 +1,8 @@
 const { Course } = require('../models');
 const { Content } = require('../models');
-const Comment = require('../models')
+const { Comment } = require('../models')
 const mongoose = require('mongoose');
-const User = require('../models');
+const { User } = require('../models');
 const httpStatus = require('http-status');
 
 // const Razorpay = require('razorpay');
@@ -34,28 +34,29 @@ exports.get_all_courses = async(req, res) => {
 }
 
 exports.get_courses_of_Content = async(req, res) => {
-    if (req.body.Content != undefined) {
+    let query = {};
+    if (req.body.Content) {
         query = { Content: mongoose.Types.ObjectId(req.body.Content) }
-    } else {
-        query = {};
     }
     console.log(req.body.Content)
     var categories = await Content.find();
-    Course.find(query, (err, courses) => {
+    try {
+        const courses = await Course.find(query).select('-description -aboutInstructor')
         let message;
         if (courses.length >= 0) {
             message = "Courses offered"
         } else {
             message = "Sorry! There are no courses in this Content."
         }
-        res.render('courses', {
-            isLogged: req.session.isLogged,
-            adminLogged: req.session.adminLogged,
+        res.send({
             message: message,
             courses: courses,
             categories: categories
         });
-    }).select('-description -aboutInstructor')
+    } catch (e) {
+        res.status(httpStatus.CREATED).send(e);
+    }
+
 }
 
 
@@ -137,14 +138,14 @@ exports.enroll_course = async(req, res) => {
 }
 
 exports.create_newCourse = (req, res) => {
-    newCourse = new Course({
-        title: req.body.title,
-        info: req.body.info,
-        description: req.body.description,
-        instructor: req.body.instructor,
-        aboutInstructor: req.body.aboutInstructor,
-        price: req.body.price,
-        watchHours: req.body.watchHours,
+    const newCourse = new Course({
+        courseTitle: req.body.courseTitle,
+        courseInfo: req.body.courseInfo,
+        // description: req.body.description,
+        courseImage: req.body.courseImage,
+        // aboutInstructor: req.body.aboutInstructor,
+        // price: req.body.price,
+        // watchHours: req.body.watchHours,
     })
     newCourse.save((err, course) => {
         if (err) console.log(err)

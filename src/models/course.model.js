@@ -1,22 +1,27 @@
 const mongoose = require('mongoose');
 
 var CourseSchema = new mongoose.Schema({
-    title: String,
-    info: String,
-    description: String,
+    courseTitle: String,
+    courseInfo: String,
+    description: {
+        type: String,
+        default: "Competitive Programming helps you become a great Programmer and crack coding interviews and competitons. In this program you will learn Competitive Programming helps you become a great Programmer and crack coding interviews and competitons. In this program you will learn"
+    },
     timestamp: { type: Date, default: Date.now },
-    likes: { type: Number, default: 0 },
-    contents: {
+    courseContents: {
         type: Array,
         default: []
     },
-    instructor: String,
-    aboutInstructor: String,
-    price: Number,
-    imageUrl: String,
-    videoUrl: String,
+    price: {
+        type: String,
+        default: 1000
+    },
+    courseImage: {
+        type: String,
+        default: "https://media.istockphoto.com/photos/laptop-and-code-background-learn-programming-language-computer-picture-id1299990773?s=612x612"
+    },
     enrolledUsers: { type: Number, default: 0 },
-    watchHours: Number,
+    watchHours: { type: Number, default: 50 },
 });
 
 module.exports = mongoose.model('Course', CourseSchema);

@@ -27,19 +27,18 @@ exports.get_newCourse_page = (req, res) => {
 
 }
 exports.create_newCourse = (req, res) => {
-    newCourse = new Course({
-        title: req.body.title,
-        description: req.body.description,
-        Content: req.body.ContentID,
-        instructor: req.body.instructor,
-        aboutInstructor: req.body.aboutInstructor,
-        price: req.body.price,
-        imageUrl: req.file.filename,
-        watchHours: req.body.watchHours,
+    const newCourse = new Course({
+        courseTitle: req.body.courseTitle,
+        courseInfo: req.body.courseInfo,
+        // description: req.body.description,
+        courseImage: req.body.courseImage,
+        // aboutInstructor: req.body.aboutInstructor,
+        // price: req.body.price,
+        // watchHours: req.body.watchHours,
     })
     newCourse.save((err, course) => {
         if (err) console.log(err)
-        res.redirect('/admin/uploadVideo/' + course._id);
+        res.status(httpStatus.CREATED).send(newCourse);
     })
 }
 
@@ -52,17 +51,30 @@ exports.get_addContent_page = (req, res) => {
     });
 }
 exports.create_newContent = (req, res) => {
-    newContent = new Content({
-        name: req.body.Content
+    // newContent = new Content({
+    //     name: req.body.Content
+    // })
+    // newContent.save((err, Content) => {
+    //     if (err) {
+    //         return res.send({
+    //             message: "Some error occurred while creating the Content. Make sure this Content doesn't already exists."
+    //         });
+    //     } else {
+    //         res.redirect('/admin/newCourse')
+    //     }
+    // })
+    const newCourse = new Course({
+        courseTitle: req.body.courseTitle,
+        courseInfo: req.body.courseInfo,
+        // description: req.body.description,
+        courseImage: req.body.courseImage,
+        // aboutInstructor: req.body.aboutInstructor,
+        // price: req.body.price,
+        // watchHours: req.body.watchHours,
     })
-    newContent.save((err, Content) => {
-        if (err) {
-            return res.send({
-                message: "Some error occurred while creating the Content. Make sure this Content doesn't already exists."
-            });
-        } else {
-            res.redirect('/admin/newCourse')
-        }
+    newCourse.save((err, course) => {
+        if (err) console.log(err)
+        res.status(httpStatus.CREATED).send(newCourse);
     })
 }
 
@@ -120,19 +132,18 @@ exports.admin_register = async(req, res) => {
 }
 
 exports.admin_login = async(req, res) => {
-    const { email, password } = req.body;
-    const user = await authService.loginUserWithEmailAndPassword(email, password);
-    const tokens = await tokenService.generateAuthTokens(user);
-    res.send({ user, tokens });
-    // if (req.body.email == process.env.ADMIN_USER && req.body.password == process.env.ADMIN_PASS) {
-    //     res.redirect('/admin/');
-    // } else {
-    //     return res.render('adminLogin', {
-    //         isLogged: req.session.isLogged,
-    //         adminLogged: req.session.adminLogged,
-    //         message: "User Name or password entered is incorrect."
-    //     })
-    // }
+    // const { email, password } = req.body;
+    // const admin = await authService.loginUserWithEmailAndPassword(email, password);
+    // const tokens = await tokenService.generateAuthTokens(user);
+    // res.redirect('/admin/newCourse');
+    // res.send({ user, tokens });
+    if (req.body.email == process.env.ADMIN_USER && req.body.password == process.env.ADMIN_PASS) {
+        res.redirect('/admin/homepage');
+    } else {
+        return res.send('adminLogin', {
+            message: "User Name or password entered is incorrect."
+        })
+    }
 }
 
 exports.admin_logout = (req, res) => {

@@ -1,10 +1,18 @@
 const mongoose = require('mongoose')
 const NotesSchema = new mongoose.Schema({
-    name: {
+    note: {
         type: String,
-        required: true,
-        unique: true
+        default: "Programming is a mental sport which enables you to code a given problem under provided constraints"
     },
+    timestamp: { type: Date, default: Date.now },
+    contentID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Content'
+    },
+    userID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 const Note = mongoose.model('Category', NotesSchema);

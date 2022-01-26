@@ -1,6 +1,6 @@
 const { Master } = require('../models');
 const { Content } = require('../models');
-const Comment = require('../models')
+const { Comment } = require('../models')
 const mongoose = require('mongoose');
 // const User = require('../models/user');
 // const Razorpay = require('razorpay');

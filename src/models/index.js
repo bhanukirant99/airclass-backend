@@ -5,3 +5,5 @@ module.exports.Course = require('./course.model');
 module.exports.Content = require('./content.model');
 module.exports.Comment = require('./comments.model');
 module.exports.Master = require('./masterclass.model');
+module.exports.Note = require('./notes.model');
+module.exports.Discussion = require('./discussions.model');

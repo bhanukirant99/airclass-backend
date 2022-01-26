@@ -2,6 +2,9 @@ const express = require('express');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const coursesRoute = require('./courses.route')
+const contentsRoute = require('./contents.route')
+const commentsRoute = require('./comments.route')
+const notessRoute = require('./notes.route')
 const adminRoute = require('./admin.route')
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
@@ -23,6 +26,18 @@ const defaultRoutes = [{
     {
         path: '/admin',
         route: adminRoute,
+    },
+    {
+        path: '/contents',
+        route: contentsRoute,
+    },
+    {
+        path: '/comments',
+        route: commentsRoute,
+    },
+    {
+        path: '/notes',
+        route: notessRoute,
     },
 ];
 

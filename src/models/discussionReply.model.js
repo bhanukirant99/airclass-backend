@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-var commentSchema = new mongoose.Schema({
+var discussionReply = new mongoose.Schema({
     comment: String,
     timestamp: { type: Date, default: Date.now },
-    contentID: {
+    discussionID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Content'
+        ref: 'Discussion'
     },
     userID: {
         type: mongoose.Schema.Types.ObjectId,
@@ -12,5 +12,5 @@ var commentSchema = new mongoose.Schema({
     }
 });
 
-const Comment = mongoose.model('comment', commentSchema);
-module.exports = Comment;
+const DiscussionReply = mongoose.model('comment', discussionReplySchema);
+module.exports = DiscussionReply;
