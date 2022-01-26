@@ -34,10 +34,10 @@ exports.get_all_course_contents = async(req, res) => {
 exports.create_newContent = async(req, res) => {
     const courseID = req.params.courseID
     newContent = await new Content({
-            title: req.body.title,
+            classTitle: req.body.title,
             courseID: courseID,
-            videoUrl: req.body.videoUrl,
-            watchHours: req.body.watchHours,
+            classVideo: req.body.videoUrl,
+            classDuration: req.body.watchHours,
         })
         // const course = await Course.find({ courseID });
         // console.log(course)
