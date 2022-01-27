@@ -34,7 +34,9 @@ exports.create_newComment = (req, res) => {
     const newComment = new Comment({
         comment: req.body.comment,
         contentID: contentID,
-        userID: req.body.userID
+        userID: req.body.userID,
+        initialName: req.body.initialName,
+        name: req.body.name
     })
     newComment.save((err, comment) => {
         if (err) console.log(err)
