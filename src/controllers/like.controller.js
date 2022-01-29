@@ -31,23 +31,21 @@ exports.get_content_like = async(req, res) => {
 
 exports.like_content = (req, res) => {
     const contentID = req.params.contentID
-    const newComment = new Comment({
-        comment: req.body.comment,
+    const newLike = new Like({
+        like: req.body.like_content,
         contentID: contentID,
         userID: req.body.userID,
-        initialName: req.body.initialName,
-        name: req.body.name
     })
-    newComment.save((err, comment) => {
+    newLike.save((err, comment) => {
         if (err) console.log(err)
-        res.status(httpStatus.CREATED).send(newComment);
+        res.status(httpStatus.CREATED).send(newLike);
     })
 }
 
-exports.delete_comment = (req, res) => {
-    const commentID = req.params.commentID;
-    Comment.findById(commentID, (err, comment) => {
-        comment.remove();
+exports.delete_like = (req, res) => {
+    const userID = req.params.userID;
+    Like.find({ userID }, (err, like) => {
+        like.remove();
         res.send("success")
     })
 }

@@ -6,6 +6,7 @@ const contentsRoute = require('./contents.route')
 const commentsRoute = require('./comments.route')
 const discussionRoute = require('./discussions.route')
 const notessRoute = require('./notes.route')
+const likeRoute = require('./like.route')
 const adminRoute = require('./admin.route')
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
@@ -44,6 +45,10 @@ const defaultRoutes = [{
         path: '/discussions',
         route: discussionRoute,
     },
+    // {
+    //     path: '/like',
+    //     route: likeRoute,
+    // },
 ];
 
 const devRoutes = [

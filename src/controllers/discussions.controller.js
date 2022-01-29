@@ -1,16 +1,17 @@
 const { content } = require('../models');
 const { Discussion } = require('../models')
+const { DiscussionReply } = require('../models')
 const mongoose = require('mongoose');
 const { User } = require('../models');
 const httpStatus = require('http-status');
 
 exports.get_all_discussions = async(req, res) => {
-    Content.find((err, contents) => {
+    Discussion.find((err, discussions) => {
         let message;
-        if (courses.length >= 0) {
-            message = "Contents offered"
+        if (discussions.length >= 0) {
+            message = "discussions offered"
         } else {
-            message = "Sorry! There are no courses in this Contents."
+            message = "Sorry! There are no discussions in this Contents."
         }
         res.send({
             message: message,
@@ -18,16 +19,6 @@ exports.get_all_discussions = async(req, res) => {
         });
     })
 }
-
-// exports.get_all_content_discussions = async(req, res) => {
-//     const discussionID = req.body.discussionID;
-
-//     var discussions = await Discussion.find({ courseID })
-//         .populate('userID')
-//         .sort({ timestamp: 'desc' });
-
-//     res.send(discussions)
-// }
 
 exports.create_newDiscussion = (req, res) => {
     const userID = req.params.userID;
@@ -41,6 +32,35 @@ exports.create_newDiscussion = (req, res) => {
         res.status(httpStatus.CREATED).send(newDiscussion);
     })
 }
+
+exports.get_all_discussionsReply = async(req, res) => {
+    DiscussionReply.find((err, discussionsReply) => {
+        let message;
+        if (discussionsReply.length >= 0) {
+            message = "discussionsReply offered"
+        } else {
+            message = "Sorry! There are no discussionsReply in this Contents."
+        }
+        res.send({
+            message: message,
+            discussionsReply: discussionsReply,
+        });
+    })
+}
+
+exports.create_newDiscussionReply = (req, res) => {
+    const discussionID = req.params.discussionID;
+    const newDiscussionReply = new DiscussionReply({
+        discussionReply: req.body.discussionReply,
+        userID: req.body.userID,
+        discussionID: discussionID
+    })
+    newDiscussionReply.save((err, discussionReply) => {
+        if (err) console.log(err)
+        res.status(httpStatus.CREATED).send(newDiscussionReply);
+    })
+}
+
 
 exports.delete_discussion = (req, res) => {
     const discussionID = req.params.discussionID;
