@@ -24,7 +24,6 @@ exports.get_all_content_comments = async(req, res) => {
 
     var comments = await Comment.find({ contentID })
         .populate('userID')
-        .sort({ timestamp: 'desc' });
 
     res.send(comments)
 }
