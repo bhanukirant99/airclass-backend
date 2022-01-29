@@ -5,9 +5,9 @@ const { User } = require('../models');
 const httpStatus = require('http-status');
 
 exports.get_all_likes = async(req, res) => {
-    Like.find((err, likes) => {
+    Like.find((err, like) => {
         let message;
-        if (likes.length >= 0) {
+        if (like.length >= 0) {
             message = "like got"
         } else {
             message = "Sorry! There are no like in this Contents."
@@ -19,15 +19,15 @@ exports.get_all_likes = async(req, res) => {
     })
 }
 
-exports.get_content_like = async(req, res) => {
-    const contentID = req.params.contentID;
+// exports.get_content_like = async(req, res) => {
+//     const contentID = req.params.contentID;
 
-    var like = await Like.find({ contentID })
-        .populate('userID')
-        .sort({ timestamp: 'desc' });
+//     var like = await Like.find({ contentID })
+//         .populate('userID')
+//         .sort({ timestamp: 'desc' });
 
-    res.send(like)
-}
+//     res.send(like)
+// }
 
 exports.like_content = (req, res) => {
     const contentID = req.params.contentID
@@ -42,10 +42,15 @@ exports.like_content = (req, res) => {
     })
 }
 
-exports.delete_like = (req, res) => {
-    const userID = req.params.userID;
-    Like.find({ userID }, (err, like) => {
-        like.remove();
-        res.send("success")
+exports.unlike_content = (req, res) => {
+    const contentID = req.params.contentID
+    const newLike = new Like({
+        like: req.body.like_content,
+        contentID: contentID,
+        userID: req.body.userID,
+    })
+    newLike.save((err, comment) => {
+        if (err) console.log(err)
+        res.status(httpStatus.CREATED).send(newLike);
     })
 }

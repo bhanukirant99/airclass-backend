@@ -25,7 +25,9 @@ exports.create_newDiscussion = (req, res) => {
     const newDiscussion = new Discussion({
         discussionTitle: req.body.discussionTitle,
         discussionInfo: req.body.discussionInfo,
-        userID: userID
+        userID: userID,
+        initialName: req.body.initialName,
+        name: req.body.name,
     })
     newDiscussion.save((err, discussion) => {
         if (err) console.log(err)
@@ -53,7 +55,9 @@ exports.create_newDiscussionReply = (req, res) => {
     const newDiscussionReply = new DiscussionReply({
         discussionReply: req.body.discussionReply,
         userID: req.body.userID,
-        discussionID: discussionID
+        discussionID: discussionID,
+        initialName: req.body.initialName,
+        name: req.body.name,
     })
     newDiscussionReply.save((err, discussionReply) => {
         if (err) console.log(err)

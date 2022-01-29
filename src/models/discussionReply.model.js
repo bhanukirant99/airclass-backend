@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 var discussionReply = new mongoose.Schema({
+    initialName: String,
+    name: String,
     discussionReply: String,
     timestamp: { type: Date, default: Date.now },
     discussionID: {

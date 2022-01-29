@@ -45,10 +45,10 @@ const defaultRoutes = [{
         path: '/discussions',
         route: discussionRoute,
     },
-    // {
-    //     path: '/like',
-    //     route: likeRoute,
-    // },
+    {
+        path: '/like',
+        route: likeRoute,
+    },
 ];
 
 const devRoutes = [
