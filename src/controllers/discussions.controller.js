@@ -36,18 +36,24 @@ exports.create_newDiscussion = (req, res) => {
 }
 
 exports.get_all_discussionsReply = async(req, res) => {
-    DiscussionReply.find((err, discussionsReply) => {
-        let message;
-        if (discussionsReply.length >= 0) {
-            message = "discussionsReply offered"
-        } else {
-            message = "Sorry! There are no discussionsReply in this Contents."
-        }
-        res.send({
-            message: message,
-            discussionsReply: discussionsReply,
-        });
-    })
+    // DiscussionReply.find((err, discussionsReply) => {
+    //     let message;
+    //     if (discussionsReply.length >= 0) {
+    //         message = "discussionsReply offered"
+    //     } else {
+    //         message = "Sorry! There are no discussionsReply in this Contents."
+    //     }
+    //     res.send({
+    //         message: message,
+    //         discussionsReply: discussionsReply,
+    //     });
+    // })
+    const discussionID = req.params.discussionID;
+
+    var discussionsReply = await DiscussionReply.find({ discussionID })
+        .populate('userID')
+
+    res.send(discussionsReply)
 }
 
 exports.create_newDiscussionReply = (req, res) => {

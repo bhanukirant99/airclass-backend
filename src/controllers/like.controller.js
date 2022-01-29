@@ -36,13 +36,20 @@ exports.like_content = (req, res) => {
         contentID: contentID,
         userID: req.body.userID,
     })
-    newLike.save((err, comment) => {
+    newLike.save((err, like) => {
         if (err) console.log(err)
         res.status(httpStatus.CREATED).send(newLike);
     })
 }
 
 exports.unlike_content = (req, res) => {
+    // const userID = req.params.userID;
+
+    // var Like = await Comment.find({ userID })
+    //     .populate('userID')
+
+    // res.send(comments)
+
     const contentID = req.params.contentID
     const newLike = new Like({
         like: req.body.like_content,
