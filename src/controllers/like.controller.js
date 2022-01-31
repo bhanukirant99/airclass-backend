@@ -29,12 +29,27 @@ exports.get_all_likes = async(req, res) => {
 //     res.send(like)
 // }
 
-exports.like_content = (req, res) => {
-    const contentID = req.params.contentID
-    const newLike = new Like({
+exports.like_content = async(req, res) => {
+    const userID = req.params.userID;
+
+    var like = await Like.find({ userID })
+        // console.log(like[0]) es
+
+    Like.find({ userID }, (err, likeUpdate) => {
+        if (err) {
+            return res.status(500).send('Something went wrong!');
+        } else {
+            likeUpdate.like = false;
+            likeUpdate.save((err, like) => {
+                if (err) console.log(err)
+                res.status(httpStatus.CREATED).send(likeUpdate);
+            })
+        };
+    })
+    const newLike = await new Like({
         like: req.body.like_content,
-        contentID: contentID,
-        userID: req.body.userID,
+        contentID: req.body.contentID,
+        userID: userID,
     })
     newLike.save((err, like) => {
         if (err) console.log(err)
@@ -42,22 +57,22 @@ exports.like_content = (req, res) => {
     })
 }
 
-exports.unlike_content = (req, res) => {
-    // const userID = req.params.userID;
+// exports.unlike_content = (req, res) => {
+//     const userID = req.params.userID;
 
-    // var Like = await Comment.find({ userID })
-    //     .populate('userID')
+//     var Like = await Comment.find({ userID })
+//         .populate('userID')
 
-    // res.send(comments)
+//     res.send(comments)
 
-    const contentID = req.params.contentID
-    const newLike = new Like({
-        like: req.body.like_content,
-        contentID: contentID,
-        userID: req.body.userID,
-    })
-    newLike.save((err, comment) => {
-        if (err) console.log(err)
-        res.status(httpStatus.CREATED).send(newLike);
-    })
-}
+//     const contentID = req.params.contentID
+//     const newLike = new Like({
+//         like: req.body.like_content,
+//         contentID: contentID,
+//         userID: req.body.userID,
+//     })
+//     newLike.save((err, comment) => {
+//         if (err) console.log(err)
+//         res.status(httpStatus.CREATED).send(newLike);
+//     })
+// }
