@@ -1,440 +1,153 @@
-# RESTful API Node Server Boilerplate
+# README
 
-[![Build Status](https://travis-ci.org/hagopj13/node-express-boilerplate.svg?branch=master)](https://travis-ci.org/hagopj13/node-express-boilerplate)
-[![Coverage Status](https://coveralls.io/repos/github/hagopj13/node-express-boilerplate/badge.svg?branch=master)](https://coveralls.io/github/hagopj13/node-express-boilerplate?branch=master)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+# **Immersis**
 
-A boilerplate/starter project for quickly building RESTful APIs using Node.js, Express, and Mongoose.
+## **Table of Contents**
 
-By running a single command, you will get a production-ready Node.js app installed and fully configured on your machine. The app comes with many built-in features, such as authentication using JWT, request validation, unit and integration tests, continuous integration, docker support, API documentation, pagination, etc. For more details, check the features list below.
+1.  [About The Project](#about-the-project)
 
-## Quick Start
+2.  [Getting Started](#getting-started)
 
-To create a project, simply run:
+    1.  [Prerequisites](#Prerequisites)
 
-```bash
-npx create-nodejs-express-app <project-name>
-```
+    2.  [Installation](#installation)
 
-Or
+3.  [Tech Stack](#tech-stack)
 
-```bash
-npm init nodejs-express-app <project-name>
-```
+4.  [Tools](#tools)
 
-## Manual Installation
+5.  [Resources](#resources)
 
-If you would still prefer to do the installation manually, follow these steps:
+6.  [Developers](#developers)
 
-Clone the repo:
+7.  [UI Screens](#ui-screens)
 
-```bash
-git clone --depth 1 https://github.com/hagopj13/node-express-boilerplate.git
-cd node-express-boilerplate
-npx rimraf ./.git
-```
+## **About The Project**
 
-Install the dependencies:
+An AIRCLASS is a learning environment in which students (customers, partners, or any third party) engage with the lesson material online. Information is often conveyed through voice or video conferencing with several participants and instructors connected to the same chat interface. However, not all AIRCLASS platforms require instructors. 
 
-```bash
-yarn install
-```
+## **Live Link**
 
-Set the environment variables:
+Immersis App Link:
+<https://airclass.netlify.app/>
 
-```bash
-cp .env.example .env
+## **Getting Started**
 
-# open .env and modify the environment variables (if needed)
-```
+To get a local copy up and running follow these simple steps.
 
-## Table of Contents
+### **Prerequisites**
 
-- [Features](#features)
-- [Commands](#commands)
-- [Environment Variables](#environment-variables)
-- [Project Structure](#project-structure)
-- [API Documentation](#api-documentation)
-- [Error Handling](#error-handling)
-- [Validation](#validation)
-- [Authentication](#authentication)
-- [Authorization](#authorization)
-- [Logging](#logging)
-- [Custom Mongoose Plugins](#custom-mongoose-plugins)
-- [Linting](#linting)
-- [Contributing](#contributing)
+This is an example of how you need to use the application
+and how to install them.
 
-## Features
+-   node
 
-- **NoSQL database**: [MongoDB](https://www.mongodb.com) object data modeling using [Mongoose](https://mongoosejs.com)
-- **Authentication and authorization**: using [passport](http://www.passportjs.org)
-- **Validation**: request data validation using [Joi](https://github.com/hapijs/joi)
-- **Logging**: using [winston](https://github.com/winstonjs/winston) and [morgan](https://github.com/expressjs/morgan)
-- **Testing**: unit and integration tests using [Jest](https://jestjs.io)
-- **Error handling**: centralized error handling mechanism
-- **API documentation**: with [swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc) and [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express)
-- **Process management**: advanced production process management using [PM2](https://pm2.keymetrics.io)
-- **Dependency management**: with [Yarn](https://yarnpkg.com)
-- **Environment variables**: using [dotenv](https://github.com/motdotla/dotenv) and [cross-env](https://github.com/kentcdodds/cross-env#readme)
-- **Security**: set security HTTP headers using [helmet](https://helmetjs.github.io)
-- **Santizing**: sanitize request data against xss and query injection
-- **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
-- **Compression**: gzip compression with [compression](https://github.com/expressjs/compression)
-- **CI**: continuous integration with [Travis CI](https://travis-ci.org)
-- **Docker support**
-- **Code coverage**: using [coveralls](https://coveralls.io)
-- **Code quality**: with [Codacy](https://www.codacy.com)
-- **Git hooks**: with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
-- **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)
-- **Editor config**: consistent editor configuration using [EditorConfig](https://editorconfig.org)
-
-## Commands
+> Go to https://nodejs.org/en/download and download your suitable LTS package.
 
-Running locally:
+### **Installation**
 
-```bash
-yarn dev
-```
+1.  Clone the repos backend & frontend
 
-Running in production:
+> git clone https://github.com/HariChandana26/airclass-frontend/
 
-```bash
-yarn start
-```
+> git clone https://github.com/bhanukirant99/airclass-backend/
 
-Testing:
-
-```bash
-# run all tests
-yarn test
-
-# run all tests in watch mode
-yarn test:watch
-
-# run test coverage
-yarn coverage
-```
-
-Docker:
-
-```bash
-# run docker container in development mode
-yarn docker:dev
+2.  Install NPM packages in both
 
-# run docker container in production mode
-yarn docker:prod
+    > npm install
 
-# run all tests in a docker container
-yarn docker:test
-```
-
-Linting:
+3.  Add the .env file in the root for backend app.
 
-```bash
-# run ESLint
-yarn lint
+> GENIUS_TOKEN="Genius_Developers_Token" (Get it from https://docs.genius.com)
 
-# fix ESLint errors
-yarn lint:fix
-
-# run prettier
-yarn prettier
+> MONGO_URI="mongo_URL"
 
-# fix prettier errors
-yarn prettier:fix
-```
+> JWT_SECRET="jwt_secret_key"
 
-## Environment Variables
+> EMAIL_ID="sender_email_id"
 
-The environment variables can be found and modified in the `.env` file. They come with these default values:
+> EMAIL_PASSWORD="sender_email_password"
 
-```bash
-# Port number
-PORT=3000
+4.  Run the backend server
 
-# URL of the Mongo DB
-MONGODB_URL=mongodb://127.0.0.1:27017/node-boilerplate
+> npm run dev
 
-# JWT
-# JWT secret key
-JWT_SECRET=thisisasamplesecret
-# Number of minutes after which an access token expires
-JWT_ACCESS_EXPIRATION_MINUTES=30
-# Number of days after which a refresh token expires
-JWT_REFRESH_EXPIRATION_DAYS=30
+5.  Run the frontend app
 
-# SMTP configuration options for the email service
-# For testing, you can use a fake SMTP service like Ethereal: https://ethereal.email/create
-SMTP_HOST=email-server
-SMTP_PORT=587
-SMTP_USERNAME=email-server-username
-SMTP_PASSWORD=email-server-password
-EMAIL_FROM=support@yourapp.com
-```
+> npm start
 
-## Project Structure
+### **Tech Stack**
 
-```
-src\
- |--config\         # Environment variables and configuration related things
- |--controllers\    # Route controllers (controller layer)
- |--docs\           # Swagger files
- |--middlewares\    # Custom express middlewares
- |--models\         # Mongoose models (data layer)
- |--routes\         # Routes
- |--services\       # Business logic (service layer)
- |--utils\          # Utility classes and functions
- |--validations\    # Request data validation schemas
- |--app.js          # Express app
- |--index.js        # App entry point
-```
+-   [React.js](https://reactjs.org/)
 
-## API Documentation
+-   [Redux](https://redux.js.org/)
 
-To view the list of available APIs and their specifications, run the server and go to `http://localhost:3000/v1/docs` in your browser. This documentation page is automatically generated using the [swagger](https://swagger.io/) definitions written as comments in the route files.
+-   [Node.js](https://nodejs.org/en/)
 
-### API Endpoints
+-   [MongoDB](https://www.mongodb.com/)
 
-List of available routes:
+-   [Express.js](https://expressjs.com/)
 
-**Auth routes**:\
-`POST /v1/auth/register` - register\
-`POST /v1/auth/login` - login\
-`POST /v1/auth/refresh-tokens` - refresh auth tokens\
-`POST /v1/auth/forgot-password` - send reset password email\
-`POST /v1/auth/reset-password` - reset password\
-`POST /v1/auth/send-verification-email` - send verification email\
-`POST /v1/auth/verify-email` - verify email
 
-**User routes**:\
-`POST /v1/users` - create a user\
-`GET /v1/users` - get all users\
-`GET /v1/users/:userId` - get user\
-`PATCH /v1/users/:userId` - update user\
-`DELETE /v1/users/:userId` - delete user
+### **Servers**
 
-## Error Handling
+-   [Heroku](http://heroku.com/)
 
-The app has a centralized error handling mechanism.
+-   [Netlify](https://www.netlify.com/)
 
-Controllers should try to catch the errors and forward them to the error handling middleware (by calling `next(error)`). For convenience, you can also wrap the controller inside the catchAsync utility wrapper, which forwards the error.
+### **Tools**
 
-```javascript
-const catchAsync = require('../utils/catchAsync');
+-   [Figma](https://figma.com/)
 
-const controller = catchAsync(async (req, res) => {
-  // this error will be forwarded to the error handling middleware
-  throw new Error('Something wrong happened');
-});
-```
+-   [Draw.io](https://app.diagrams.net/)
 
-The error handling middleware sends an error response, which has the following format:
+-   [Github](https://github.com/)
 
-```json
-{
-  "code": 404,
-  "message": "Not found"
-}
-```
+### **Source Code Repo**
 
-When running in development mode, the error response also contains the error stack.
+-   Front End Source Repo -
+    <https://github.com/HariChandana26/airclass-frontend/tree/main>
 
-The app has a utility ApiError class to which you can attach a response code and a message, and then throw it from anywhere (catchAsync will catch it).
+-   Back End Source Repo -
+    <https://github.com/bhanukirant99/airclass-backend/tree/main>
 
-For example, if you are trying to get a user from the DB who is not found, and you want to send a 404 error, the code should look something like:
+## **Developers**
 
-```javascript
-const httpStatus = require('http-status');
-const ApiError = require('../utils/ApiError');
-const User = require('../models/User');
+-   Hari Chadana Sapare
 
-const getUser = async (userId) => {
-  const user = await User.findById(userId);
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-  }
-};
-```
+-   Bhanu Kiran
 
-## Validation
+## **Mentor**
 
-Request data is validated using [Joi](https://joi.dev/). Check the [documentation](https://joi.dev/api/) for more details on how to write Joi validation schemas.
+-   Jayesh
 
-The validation schemas are defined in the `src/validations` directory and are used in the routes by providing them as parameters to the `validate` middleware.
+## **Resources**
 
-```javascript
-const express = require('express');
-const validate = require('../../middlewares/validate');
-const userValidation = require('../../validations/user.validation');
-const userController = require('../../controllers/user.controller');
+-   [PRD](https://docs.google.com/document/d/1h59beyJ2lIIWBvVc5bhbEKLaX9O8CgezDVwhfko7DcA)
 
-const router = express.Router();
+-   [Wireframes](https://www.figma.com/file/XF4cMLkW5ADXi6g8DmEtbh/air-class)
 
-router.post('/users', validate(userValidation.createUser), userController.createUser);
-```
+-   [HLD](https://elated-saha-243b5f.netlify.app/cc9b35d2394db9ad7f95f56e7a689f75.png)
 
-## Authentication
+## **UI Screens**
 
-To require authentication for certain routes, you can use the `auth` middleware.
+### Landing Page
 
-```javascript
-const express = require('express');
-const auth = require('../../middlewares/auth');
-const userController = require('../../controllers/user.controller');
+![](https://elated-saha-243b5f.netlify.app/83bdd145153227b59c4af4a0ba7f218e.png)
 
-const router = express.Router();
+This is the Landing page of our application. You can navigate to the
+below mentioned links from the homepage.
 
-router.post('/users', auth(), userController.createUser);
-```
+1. Home (Landing page)
 
-These routes require a valid JWT access token in the Authorization request header using the Bearer schema. If the request does not contain a valid access token, an Unauthorized (401) error is thrown.
+2. Search
 
-**Generating Access Tokens**:
+3. Login
 
-An access token can be generated by making a successful call to the register (`POST /v1/auth/register`) or login (`POST /v1/auth/login`) endpoints. The response of these endpoints also contains refresh tokens (explained below).
+4. Signup
 
-An access token is valid for 30 minutes. You can modify this expiration time by changing the `JWT_ACCESS_EXPIRATION_MINUTES` environment variable in the .env file.
+5. Create Course
 
-**Refreshing Access Tokens**:
+6. Enroll Course
 
-After the access token expires, a new access token can be generated, by making a call to the refresh token endpoint (`POST /v1/auth/refresh-tokens`) and sending along a valid refresh token in the request body. This call returns a new access token and a new refresh token.
-
-A refresh token is valid for 30 days. You can modify this expiration time by changing the `JWT_REFRESH_EXPIRATION_DAYS` environment variable in the .env file.
-
-## Authorization
-
-The `auth` middleware can also be used to require certain rights/permissions to access a route.
-
-```javascript
-const express = require('express');
-const auth = require('../../middlewares/auth');
-const userController = require('../../controllers/user.controller');
-
-const router = express.Router();
-
-router.post('/users', auth('manageUsers'), userController.createUser);
-```
-
-In the example above, an authenticated user can access this route only if that user has the `manageUsers` permission.
-
-The permissions are role-based. You can view the permissions/rights of each role in the `src/config/roles.js` file.
-
-If the user making the request does not have the required permissions to access this route, a Forbidden (403) error is thrown.
-
-## Logging
-
-Import the logger from `src/config/logger.js`. It is using the [Winston](https://github.com/winstonjs/winston) logging library.
-
-Logging should be done according to the following severity levels (ascending order from most important to least important):
-
-```javascript
-const logger = require('<path to src>/config/logger');
-
-logger.error('message'); // level 0
-logger.warn('message'); // level 1
-logger.info('message'); // level 2
-logger.http('message'); // level 3
-logger.verbose('message'); // level 4
-logger.debug('message'); // level 5
-```
-
-In development mode, log messages of all severity levels will be printed to the console.
-
-In production mode, only `info`, `warn`, and `error` logs will be printed to the console.\
-It is up to the server (or process manager) to actually read them from the console and store them in log files.\
-This app uses pm2 in production mode, which is already configured to store the logs in log files.
-
-Note: API request information (request url, response code, timestamp, etc.) are also automatically logged (using [morgan](https://github.com/expressjs/morgan)).
-
-## Custom Mongoose Plugins
-
-The app also contains 2 custom mongoose plugins that you can attach to any mongoose model schema. You can find the plugins in `src/models/plugins`.
-
-```javascript
-const mongoose = require('mongoose');
-const { toJSON, paginate } = require('./plugins');
-
-const userSchema = mongoose.Schema(
-  {
-    /* schema definition here */
-  },
-  { timestamps: true }
-);
-
-userSchema.plugin(toJSON);
-userSchema.plugin(paginate);
-
-const User = mongoose.model('User', userSchema);
-```
-
-### toJSON
-
-The toJSON plugin applies the following changes in the toJSON transform call:
-
-- removes \_\_v, createdAt, updatedAt, and any schema path that has private: true
-- replaces \_id with id
-
-### paginate
-
-The paginate plugin adds the `paginate` static method to the mongoose schema.
-
-Adding this plugin to the `User` model schema will allow you to do the following:
-
-```javascript
-const queryUsers = async (filter, options) => {
-  const users = await User.paginate(filter, options);
-  return users;
-};
-```
-
-The `filter` param is a regular mongo filter.
-
-The `options` param can have the following (optional) fields:
-
-```javascript
-const options = {
-  sortBy: 'name:desc', // sort order
-  limit: 5, // maximum results per page
-  page: 2, // page number
-};
-```
-
-The plugin also supports sorting by multiple criteria (separated by a comma): `sortBy: name:desc,role:asc`
-
-The `paginate` method returns a Promise, which fulfills with an object having the following properties:
-
-```json
-{
-  "results": [],
-  "page": 2,
-  "limit": 5,
-  "totalPages": 10,
-  "totalResults": 48
-}
-```
-
-## Linting
-
-Linting is done using [ESLint](https://eslint.org/) and [Prettier](https://prettier.io).
-
-In this app, ESLint is configured to follow the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base) with some modifications. It also extends [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) to turn off all rules that are unnecessary or might conflict with Prettier.
-
-To modify the ESLint configuration, update the `.eslintrc.json` file. To modify the Prettier configuration, update the `.prettierrc.json` file.
-
-To prevent a certain file or directory from being linted, add it to `.eslintignore` and `.prettierignore`.
-
-To maintain a consistent coding style across different IDEs, the project contains `.editorconfig`
-
-## Contributing
-
-Contributions are more than welcome! Please check out the [contributing guide](CONTRIBUTING.md).
-
-## Inspirations
-
-- [danielfsousa/express-rest-es2017-boilerplate](https://github.com/danielfsousa/express-rest-es2017-boilerplate)
-- [madhums/node-express-mongoose](https://github.com/madhums/node-express-mongoose)
-- [kunalkapadia/express-mongoose-es6-rest-api](https://github.com/kunalkapadia/express-mongoose-es6-rest-api)
-
-## License
-
-[MIT](LICENSE)
+7. Access Videos, Notes

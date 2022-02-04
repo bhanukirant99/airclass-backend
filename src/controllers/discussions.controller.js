@@ -1,8 +1,5 @@
-const { content } = require('../models');
 const { Discussion } = require('../models')
 const { DiscussionReply } = require('../models')
-const mongoose = require('mongoose');
-const { User } = require('../models');
 const httpStatus = require('http-status');
 
 exports.get_all_discussions = async(req, res) => {
@@ -36,18 +33,6 @@ exports.create_newDiscussion = (req, res) => {
 }
 
 exports.get_all_discussionsReply = async(req, res) => {
-    // DiscussionReply.find((err, discussionsReply) => {
-    //     let message;
-    //     if (discussionsReply.length >= 0) {
-    //         message = "discussionsReply offered"
-    //     } else {
-    //         message = "Sorry! There are no discussionsReply in this Contents."
-    //     }
-    //     res.send({
-    //         message: message,
-    //         discussionsReply: discussionsReply,
-    //     });
-    // })
     const discussionID = req.params.discussionID;
 
     var discussionsReply = await DiscussionReply.find({ discussionID })

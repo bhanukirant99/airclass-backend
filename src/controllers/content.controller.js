@@ -1,7 +1,4 @@
-const { Course } = require('../models');
 const { Content } = require('../models');
-const mongoose = require('mongoose');
-const { User } = require('../models');
 const httpStatus = require('http-status');
 
 exports.get_all_contents = async(req, res) => {
@@ -26,7 +23,6 @@ exports.get_all_course_contents = async(req, res) => {
 
     var contents = await Content.find({ courseID })
         .populate('courseID')
-        .sort({ timestamp: 'desc' });
 
     res.send(contents)
 }
