@@ -34,15 +34,11 @@ exports.get_all_course_contents = async(req, res) => {
 exports.create_newContent = async(req, res) => {
     const courseID = req.params.courseID
     newContent = await new Content({
-            classTitle: req.body.classTitle,
-            courseID: courseID,
-            classVideo: req.body.classVideo,
-            classDuration: req.body.classDuration,
-        })
-        // const course = await Course.find({ courseID });
-        // console.log(course)
-        // course.courseContents.push(newContent._id);
-        // course.save();
+        classTitle: req.body.classTitle,
+        courseID: courseID,
+        classVideo: req.body.classVideo,
+        classDuration: req.body.classDuration,
+    })
     newContent.save((err, content) => {
         if (err) console.log(err)
         res.status(httpStatus.CREATED).send(newContent);

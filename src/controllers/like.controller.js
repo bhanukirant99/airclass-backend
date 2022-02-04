@@ -19,21 +19,11 @@ exports.get_all_likes = async(req, res) => {
     })
 }
 
-// exports.get_content_like = async(req, res) => {
-//     const contentID = req.params.contentID;
-
-//     var like = await Like.find({ contentID })
-//         .populate('userID')
-//         .sort({ timestamp: 'desc' });
-
-//     res.send(like)
-// }
 
 exports.like_content = async(req, res) => {
     const userID = req.params.userID;
 
     var like = await Like.find({ userID })
-        // console.log(like[0]) es
 
     Like.find({ userID }, (err, likeUpdate) => {
         if (err) {
@@ -56,23 +46,3 @@ exports.like_content = async(req, res) => {
         res.status(httpStatus.CREATED).send(newLike);
     })
 }
-
-// exports.unlike_content = (req, res) => {
-//     const userID = req.params.userID;
-
-//     var Like = await Comment.find({ userID })
-//         .populate('userID')
-
-//     res.send(comments)
-
-//     const contentID = req.params.contentID
-//     const newLike = new Like({
-//         like: req.body.like_content,
-//         contentID: contentID,
-//         userID: req.body.userID,
-//     })
-//     newLike.save((err, comment) => {
-//         if (err) console.log(err)
-//         res.status(httpStatus.CREATED).send(newLike);
-//     })
-// }

@@ -5,19 +5,7 @@ const mongoose = require('mongoose');
 const { User } = require('../models');
 const httpStatus = require('http-status');
 
-// const Razorpay = require('razorpay');
-// const Transaction = require('../models/transactions');
-// const path = require('path');
-// const fs = require('fs');
-
-//razorpay instance initialization
-// var instance = new Razorpay({
-//     key_id: process.env.RAZORPAY_ID,
-//     key_secret: process.env.RAZORPAY_SECRET,
-// });
-
 exports.get_all_courses = async(req, res) => {
-    // var categories = await Content.find();
     Course.find((err, courses) => {
         let message;
         if (courses.length >= 0) {
@@ -28,7 +16,6 @@ exports.get_all_courses = async(req, res) => {
         res.send({
             message: message,
             courses: courses,
-            // categories: categories
         });
     }).select('-description -aboutInstructor')
 }
@@ -63,46 +50,12 @@ exports.get_courses_of_Content = async(req, res) => {
 exports.get_single_course = async(req, res) => {
     const courseID = mongoose.Types.ObjectId(req.params.courseID.toString());
 
-    // var mostLikedCourses = await Course.find()
-    //     .limit(4)
-    //     .select('-description')
-    //     .sort({ likes: 'desc' });
-
-    // var user;
-    // if (req.user_id != null) {
-    //     user = User.findById(req.body.user_id);
-    //     var purchasedCourse = user.purchasedCourse;
-    //     var alreadyPurchased = false;
-    //     for (let i = 0; i < purchasedCourse.length; i++) {
-    //         if (purchasedCourse[i].toString() == req.params.courseID.toString()) {
-    //             alreadyPurchased = true;
-    //         }
-    //     }
-    // }
-
-    // user.purchasedCourse.push(courseID.toString())
-    // user.save((err, user) => {
-    //     if (err) {
-    //         console.log(err);
-    //     }
-
-    //     //increasing the number of enrolled people in courses
-    //     Course.findById(courseID, (err, course) => {
-    //         course.enrolledUsers = course.enrolledUsers + 1;
-    //         course.save();
-    //     }).select('-description -aboutInstructor')
-
-    // })
-
-
     Course.findById(courseID, (err, course) => {
         if (err) {
             console.log(err)
         } else {
             return res.send({
                 course: course,
-                // mostLikedCourses: mostLikedCourses,
-                // comments: comments,
             });
         }
     })
@@ -143,33 +96,12 @@ exports.create_newCourse = (req, res) => {
         courseInfo: req.body.courseInfo,
         courseDescription: req.body.courseDescription,
         courseImage: req.body.courseImage,
-        // watchHours: req.body.watchHours,
     })
     newCourse.save((err, course) => {
         if (err) console.log(err)
         res.status(httpStatus.CREATED).send(newCourse);
     })
 }
-
-// exports.get_home_page = async(req, res) => {
-//     var recentCourses = await Course.find()
-//         .limit(4)
-//         .select('-description -aboutInstructor')
-//         .sort({ timestamp: 'desc' });
-//     var mostLikedCourses = await Course.find()
-//         .limit(4)
-//         .select('-description -aboutInstructor')
-//         .sort({ likes: 'desc' });
-//     var categories = await Content.find();
-
-//     res.render('index', {
-//         isLogged: req.session.isLogged,
-//         adminLogged: req.session.adminLogged,
-//         recentCourses: recentCourses,
-//         mostLikedCourses: mostLikedCourses,
-//         categories: categories
-//     })
-// }
 
 exports.get_myCourses_page = (req, res) => {
     User.findById(req.session.user_id, (err, user) => {

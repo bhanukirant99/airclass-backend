@@ -2,17 +2,6 @@ const { Master } = require('../models');
 const { Content } = require('../models');
 const { Comment } = require('../models')
 const mongoose = require('mongoose');
-// const User = require('../models/user');
-// const Razorpay = require('razorpay');
-// const Transaction = require('../models/transactions');
-// const path = require('path');
-// const fs = require('fs');
-
-//razorpay instance initialization
-// var instance = new Razorpay({
-//     key_id: process.env.RAZORPAY_ID,
-//     key_secret: process.env.RAZORPAY_SECRET,
-// });
 
 exports.get_all_courses = async(req, res) => {
     var categories = await Content.find();
@@ -64,9 +53,6 @@ exports.get_single_course = async(req, res) => {
         .select('-description')
         .sort({ likes: 'desc' });
 
-    // var comments = await Comment.find({ courseID: courseID })
-    //     .populate('userID')
-    //     .sort({ timestamp: 'desc' });
 
     var user;
     if (req.user_id != null && req.token != null) {
