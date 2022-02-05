@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const { Content } = require('../models');
 const { Course } = require('../models');
-const { authService, userService, tokenService, emailService } = require('../services');
+const { userService, tokenService } = require('../services');
 
 exports.get_newCourse_page = (req, res) => {
     Content.find((err, categories) => {

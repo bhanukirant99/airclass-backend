@@ -1,7 +1,4 @@
-const { Content } = require('../models');
 const { Comment } = require('../models')
-const mongoose = require('mongoose');
-const { User } = require('../models');
 const httpStatus = require('http-status');
 
 exports.get_all_comments = async(req, res) => {
