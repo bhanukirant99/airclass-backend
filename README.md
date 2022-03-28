@@ -1,58 +1,44 @@
+
+# airclass-f3-epsilon-1
+airclass-f3-epsilon-1 created by GitHub Classroom
+
 # README
 
-# **Immersis**
+# **Airclass**
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/63184837/159295575-21d28132-5087-403e-ace2-bf15081418f6.png" alt="airclass-logo"/>
+</p>
+
+We are living in the age of pandemics, where online learning increased significantly. With schools and universities shut, virtual learning became the only viable solution. With many people in lockdowns and more free time on their hands, the popularity of online courses skyrocketed. When it comes to collecting/writing notes and organising notes, it becomes really a difficult task. With AIRCLASS, we are proving pre-written notes for all the lectures which helps you in organising notes as per course. Also we have providing different features like cpmments section and discussion forum where the student can post there doubts and get them resolved by fellow students or mentors.
 ## **Table of Contents**
 
-1.  [About The Project](#about-the-project)
+1.  [Demo](#project-demo)
 
-2.  [Getting Started](#getting-started)
+2.  [Installation](#installation)
 
-    1.  [Prerequisites](#Prerequisites)
+3.  [Technology Stack](#technology-stack)
 
-    2.  [Installation](#installation)
+4.  [Authors](#authors)
 
-3.  [Tech Stack](#tech-stack)
+5.  [License](#license)
 
-4.  [Tools](#tools)
+## **Project Demo**
 
-5.  [Resources](#resources)
+<a href="https://air-class.netlify.app/">
+    <p>Live Demo</p>
+ </a>
+ 
+ Test Credentials:
+ - Username: pesto@pesto.tech
+ - Password: pesto123
 
-6.  [Developers](#developers)
-
-7.  [UI Screens](#ui-screens)
-
-## **About The Project**
-
-An AIRCLASS is a learning environment in which students (customers, partners, or any third party) engage with the lesson material online. Information is often conveyed through voice or video conferencing with several participants and instructors connected to the same chat interface. However, not all AIRCLASS platforms require instructors. 
-
-## **Live Link**
-
-Immersis App Link:
-<https://airclass.netlify.app/>
-
-## **Getting Started**
-
-To get a local copy up and running follow these simple steps.
-
-### **Prerequisites**
-
-This is an example of how you need to use the application
-and how to install them.
-
--   node
-
-> Go to https://nodejs.org/en/download and download your suitable LTS package.
-
-### **Installation**
-
-1.  Clone the repos backend & frontend
-
-> git clone https://github.com/HariChandana26/airclass-frontend/
+## **Installation**
+1.  Clone the backend repo
 
 > git clone https://github.com/bhanukirant99/airclass-backend/
 
-2.  Install NPM packages in both
+2.  Install NPM packages
 
     > npm install
 
@@ -70,17 +56,11 @@ and how to install them.
 
 4.  Run the backend server
 
-> npm run dev
+  > npm run dev
 
-5.  Run the frontend app
 
-> npm start
 
-### **Tech Stack**
-
--   [React.js](https://reactjs.org/)
-
--   [Redux](https://redux.js.org/)
+### **Technology Stack**
 
 -   [Node.js](https://nodejs.org/en/)
 
@@ -88,66 +68,13 @@ and how to install them.
 
 -   [Express.js](https://expressjs.com/)
 
-
-### **Servers**
-
--   [Heroku](http://heroku.com/)
-
--   [Netlify](https://www.netlify.com/)
-
-### **Tools**
-
--   [Figma](https://figma.com/)
-
--   [Draw.io](https://app.diagrams.net/)
-
--   [Github](https://github.com/)
-
-### **Source Code Repo**
-
--   Front End Source Repo -
-    <https://github.com/HariChandana26/airclass-frontend/tree/main>
-
--   Back End Source Repo -
-    <https://github.com/bhanukirant99/airclass-backend/tree/main>
-
-## **Developers**
+## **Authors**
 
 -   Hari Chadana Sapare
 
 -   Bhanu Kiran
 
-## **Mentor**
-
--   Jayesh
-
-## **Resources**
-
--   [PRD](https://docs.google.com/document/d/1h59beyJ2lIIWBvVc5bhbEKLaX9O8CgezDVwhfko7DcA)
-
--   [Wireframes](https://www.figma.com/file/XF4cMLkW5ADXi6g8DmEtbh/air-class)
-
--   [HLD](https://elated-saha-243b5f.netlify.app/cc9b35d2394db9ad7f95f56e7a689f75.png)
-
-## **UI Screens**
-
-### Landing Page
-
-![](https://elated-saha-243b5f.netlify.app/83bdd145153227b59c4af4a0ba7f218e.png)
-
-This is the Landing page of our application. You can navigate to the
-below mentioned links from the homepage.
-
-1. Home (Landing page)
-
-2. Search
-
-3. Login
-
-4. Signup
-
-5. Create Course
-
-6. Enroll Course
-
-7. Access Videos, Notes
+## **License**
+<a href='https://opensource.org/licenses/MIT'>
+  <p>MIT</p>
+</a>
